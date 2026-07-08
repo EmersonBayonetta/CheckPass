@@ -67,7 +67,7 @@ export function GuestActions({ guest }: GuestActionsProps) {
 
   return (
     <>
-      <div className="actions">
+      <div className="actions guest-action-buttons">
         <button className="button ghost" type="button" onClick={() => setEditing(true)}>
           <Pencil size={18} /> Editar
         </button>

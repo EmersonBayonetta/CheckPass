@@ -121,6 +121,45 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
           </tbody>
         </table>
       </div>
+
+      <div className="guest-card-list">
+        {guests.map((guest) => (
+          <article className="guest-card" key={guest.id}>
+            <div className="guest-card-header">
+              <div>
+                <h2>{guest.name}</h2>
+                <p className="muted">{guest.phone}</p>
+              </div>
+              <StatusBadge status={guest.status} />
+            </div>
+
+            <div className="guest-card-meta">
+              <div>
+                <span>Acompanhantes</span>
+                <strong>
+                  {guest.companionsCount}/{guest.maxCompanions}
+                </strong>
+              </div>
+              <div>
+                <span>Confirmacao</span>
+                <strong>{formatDateTime(guest.confirmedAt)}</strong>
+              </div>
+              <div>
+                <span>Entrada</span>
+                <strong>{guest.entryValidated ? formatDateTime(guest.entryValidatedAt) : "Pendente"}</strong>
+              </div>
+            </div>
+
+            <div className="guest-card-actions">
+              <a className="button ghost" href={publicUrlForToken(guest.token)} target="_blank">
+                Abrir link
+              </a>
+              <CopyLinkButton link={publicUrlForToken(guest.token)} />
+              <GuestActions guest={guest} />
+            </div>
+          </article>
+        ))}
+      </div>
     </AdminShell>
   );
 }

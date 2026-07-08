@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogOut } from "lucide-react";
+import { MobileNav } from "@/components/MobileNav";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         <Link className="brand" href="/admin">
           CheckPass
         </Link>
+        <MobileNav />
         <nav className="nav">
           <Link className="button ghost" href="/admin">
             Painel
