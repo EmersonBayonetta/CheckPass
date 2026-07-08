@@ -1,24 +1,24 @@
 # Confirma Presenca
 
-Sistema web para confirmacao digital de presenca e validacao de entrada em eventos.
+Sistema web para confirmação digital de presença e validação de entrada em eventos.
 
 ## Stack
 
 - Next.js com App Router
 - API REST no proprio Next.js
 - Postgres externo, pronto para Vercel
-- Autenticacao simples por senha para o painel administrativo
+- Autenticação simples por senha para o painel administrativo
 
 ## Funcionalidades
 
 - Cadastro manual de convidados
-- Token e link unico por convidado
-- Pagina publica de confirmacao por link
+- Token e link único por convidado
+- Página pública de confirmação por link
 - Limite de acompanhantes por convidado
 - Painel com filtros e totais do evento
 - Busca por nome ou telefone no dia do evento
-- Validacao de entrada com bloqueio de duplicidade
-- Bloqueio de edicao por variavel de ambiente ou data do evento
+- Validação de entrada com bloqueio de duplicidade
+- Bloqueio de edição por variável de ambiente ou data do evento
 
 ## Rodando localmente
 
@@ -42,7 +42,7 @@ Copy-Item .env.example .env
 
 3. Configure `DATABASE_URL` com uma URL Postgres.
 
-Para publicar na Vercel, use um banco externo como Neon, Supabase ou outra integracao Postgres do Marketplace.
+Para publicar na Vercel, use um banco externo como Neon, Supabase ou outra integração Postgres do Marketplace.
 
 4. Crie a tabela e dados iniciais:
 
@@ -59,7 +59,7 @@ npm run dev
 6. Acesse:
 
 - Painel administrativo: `http://localhost:3000/admin`
-- Senha padrao: `admin123`
+- Senha padrão: `admin123`
 
 ## Variaveis de ambiente
 
@@ -67,7 +67,7 @@ npm run dev
 - `ADMIN_PASSWORD`: senha do organizador
 - `AUTH_SECRET`: chave usada para assinar a sessao
 - `NEXT_PUBLIC_APP_URL`: base para gerar links publicos
-- `EVENT_DATE`: data limite para edicao da confirmacao
+- `EVENT_DATE`: data limite para edição da confirmação
 - `CONFIRMATIONS_LOCKED`: use `true` para bloquear edicoes manualmente
 
 ## Estrutura
@@ -76,9 +76,9 @@ npm run dev
 app/
   admin/                 telas protegidas do organizador
   api/                   rotas REST
-  confirmar/[token]/     pagina publica do convidado
+  confirmar/[token]/     página pública do convidado
 components/              componentes reutilizaveis
-lib/                     autenticacao, banco, formatacao e regras
+lib/                     autenticação, banco, formatação e regras
 prisma/                  schema SQL do banco Postgres
 scripts/                 seed inicial
 ```
@@ -105,7 +105,7 @@ EVENT_DATE="2026-12-31T23:59:59-03:00"
 CONFIRMATIONS_LOCKED="false"
 ```
 
-6. Use o build padrao da Vercel para Next.js: `npm run build`.
+6. Use o build padrão da Vercel para Next.js: `npm run build`.
 
 ## Rotas REST principais
 

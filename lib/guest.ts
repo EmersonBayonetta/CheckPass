@@ -10,7 +10,7 @@ export async function createUniqueToken() {
     const token = generateToken();
     if (!(await findGuestByTokenExists(token))) return token;
   }
-  throw new Error("Nao foi possivel gerar token unico.");
+  throw new Error("Não foi possível gerar token único.");
 }
 
 export function confirmationIsEditable() {

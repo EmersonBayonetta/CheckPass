@@ -47,7 +47,7 @@ export function GuestForm({ onCreated }: GuestFormProps) {
       const data = await readResponse(response);
 
       if (!response.ok || !data.guest) {
-        setMessage(data.error || "Nao foi possivel cadastrar. Tente novamente.");
+        setMessage(data.error || "Não foi possível cadastrar. Tente novamente.");
         return;
       }
 
@@ -59,7 +59,7 @@ export function GuestForm({ onCreated }: GuestFormProps) {
       });
       onCreated?.();
     } catch {
-      setMessage("Nao foi possivel conectar ao servidor. Tente novamente.");
+      setMessage("Não foi possível conectar ao servidor. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -85,7 +85,7 @@ export function GuestForm({ onCreated }: GuestFormProps) {
             <input className="input" name="email" type="email" />
           </label>
           <label className="field">
-            <span>Maximo de acompanhantes</span>
+            <span>Máximo de acompanhantes</span>
             <input className="input" min="0" name="maxCompanions" type="number" defaultValue="0" />
           </label>
         </div>
@@ -104,7 +104,7 @@ export function GuestForm({ onCreated }: GuestFormProps) {
             <CheckCircle className="success-icon" size={42} />
             <h2>Convidado cadastrado</h2>
             <p className="muted">
-              {createdGuest.name} foi cadastrado com sucesso. O link individual ja esta pronto para envio.
+              {createdGuest.name} foi cadastrado com sucesso. O link individual já está pronto para envio.
             </p>
             <div className="success-link">{createdGuest.link}</div>
             <div className="actions center">

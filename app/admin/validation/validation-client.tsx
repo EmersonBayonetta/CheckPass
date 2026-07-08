@@ -63,7 +63,7 @@ export function ValidationClient() {
     });
     const data = await response.json();
     if (!response.ok) {
-      setMessage(data.error || "Nao foi possivel validar.");
+      setMessage(data.error || "Não foi possível validar.");
       return;
     }
     setMessage("Entrada validada com sucesso.");
@@ -109,7 +109,7 @@ export function ValidationClient() {
                 Acompanhantes: {guest.companionsCount}/{guest.maxCompanions}
               </span>
             </p>
-            <p>{guest.entryValidated ? `Entrada ja validada em ${new Date(guest.entryValidatedAt || "").toLocaleString("pt-BR")}` : "Entrada pendente"}</p>
+            <p>{guest.entryValidated ? `Entrada já validada em ${new Date(guest.entryValidatedAt || "").toLocaleString("pt-BR")}` : "Entrada pendente"}</p>
             <button className="button primary" disabled={guest.entryValidated} onClick={() => validate(guest.id)}>
               <ShieldCheck size={18} /> Validar entrada
             </button>

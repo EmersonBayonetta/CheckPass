@@ -53,7 +53,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
           <strong>{confirmedCount + companionsCount}</strong>
         </div>
         <div className="stat">
-          <span className="muted">Ja validados</span>
+          <span className="muted">Já validados</span>
           <strong>{totals.validatedGuests}</strong>
         </div>
       </section>
@@ -66,13 +66,13 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
           Confirmados
         </Link>
         <Link className="button secondary" href="/admin?status=PENDING">
-          Nao confirmados
+          Não confirmados
         </Link>
         <Link className="button secondary" href="/admin?status=DECLINED">
           Recusados
         </Link>
         <Link className="button secondary" href="/admin?status=VALIDATED">
-          Ja validados
+          Já validados
         </Link>
       </div>
 
@@ -83,10 +83,10 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
               <th>Convidado</th>
               <th>Status</th>
               <th>Acompanhantes</th>
-              <th>Confirmacao</th>
+              <th>Confirmação</th>
               <th>Entrada</th>
               <th>Link</th>
-              <th>Acoes</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -141,7 +141,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
                 </strong>
               </div>
               <div>
-                <span>Confirmacao</span>
+                <span>Confirmação</span>
                 <strong>{formatDateTime(guest.confirmedAt)}</strong>
               </div>
               <div>

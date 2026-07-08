@@ -5,7 +5,7 @@ import { deleteGuest, updateGuest } from "@/lib/db";
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await requireAdmin())) {
-    return NextResponse.json({ error: "Nao autorizado." }, { status: 401 });
+    return NextResponse.json({ error: "Não autorizado." }, { status: 401 });
   }
 
   const { id } = await params;
@@ -13,11 +13,11 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   const maxCompanions = Number(body.maxCompanions || 0);
 
   if (!String(body.name || "").trim() || !String(body.phone || "").trim()) {
-    return NextResponse.json({ error: "Nome e telefone sao obrigatorios." }, { status: 400 });
+    return NextResponse.json({ error: "Nome e telefone são obrigatórios." }, { status: 400 });
   }
 
   if (!Number.isInteger(maxCompanions) || maxCompanions < 0) {
-    return NextResponse.json({ error: "Quantidade maxima de acompanhantes invalida." }, { status: 400 });
+    return NextResponse.json({ error: "Quantidade máxima de acompanhantes inválida." }, { status: 400 });
   }
 
   const guest = await updateGuest({
@@ -29,7 +29,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   });
 
   if (!guest) {
-    return NextResponse.json({ error: "Convidado nao encontrado." }, { status: 404 });
+    return NextResponse.json({ error: "Convidado não encontrado." }, { status: 404 });
   }
 
   return NextResponse.json({ guest: { ...guest, link: publicUrlForToken(guest.token) } });
@@ -37,14 +37,14 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 
 export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await requireAdmin())) {
-    return NextResponse.json({ error: "Nao autorizado." }, { status: 401 });
+    return NextResponse.json({ error: "Não autorizado." }, { status: 401 });
   }
 
   const { id } = await params;
   const deleted = await deleteGuest(id);
 
   if (!deleted) {
-    return NextResponse.json({ error: "Convidado nao encontrado." }, { status: 404 });
+    return NextResponse.json({ error: "Convidado não encontrado." }, { status: 404 });
   }
 
   return NextResponse.json({ ok: true });

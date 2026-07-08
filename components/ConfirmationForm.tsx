@@ -17,7 +17,7 @@ type Props = {
 export function ConfirmationForm({ guest, editable }: Props) {
   const [status, setStatus] = useState(guest.status);
   const [companionsCount, setCompanionsCount] = useState(guest.companionsCount);
-  const [message, setMessage] = useState(editable ? "" : "Confirmacoes bloqueadas para este evento.");
+  const [message, setMessage] = useState(editable ? "" : "Confirmações bloqueadas para este evento.");
   const [loading, setLoading] = useState(false);
 
   async function submit(nextStatus: "CONFIRMED" | "DECLINED") {
@@ -35,7 +35,7 @@ export function ConfirmationForm({ guest, editable }: Props) {
     const data = await response.json();
     setLoading(false);
     if (!response.ok) {
-      setMessage(data.error || "Nao foi possivel salvar sua resposta.");
+      setMessage(data.error || "Não foi possível salvar sua resposta.");
       return;
     }
     setStatus(data.guest.status);
@@ -50,8 +50,8 @@ export function ConfirmationForm({ guest, editable }: Props) {
   return (
     <div className="card">
       <p className="muted">Convite individual</p>
-      <h1>Ola, {guest.name}</h1>
-      <p>Voce confirma presenca?</p>
+      <h1>Olá, {guest.name}</h1>
+      <p>Você confirma presença?</p>
       <div className="form">
         {status !== "DECLINED" ? (
           <label className="field">
@@ -76,7 +76,7 @@ export function ConfirmationForm({ guest, editable }: Props) {
             <Check size={18} /> Sim
           </button>
           <button className="button danger" disabled={!editable || loading} onClick={() => submit("DECLINED")}>
-            <X size={18} /> Nao
+            <X size={18} /> Não
           </button>
         </div>
       </div>

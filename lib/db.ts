@@ -35,7 +35,7 @@ type GuestRow = {
 const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error("DATABASE_URL nao configurada. Configure uma URL Postgres no .env ou na Vercel.");
+  throw new Error("DATABASE_URL não configurada. Configure uma URL Postgres no .env ou na Vercel.");
 }
 
 const globalForSql = globalThis as unknown as { sql?: postgres.Sql };

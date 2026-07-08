@@ -4,7 +4,7 @@ import { findGuestById, validateGuestEntry } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   if (!(await requireAdmin())) {
-    return NextResponse.json({ error: "Nao autorizado." }, { status: 401 });
+    return NextResponse.json({ error: "Não autorizado." }, { status: 401 });
   }
 
   const body = await request.json();
@@ -12,15 +12,15 @@ export async function POST(request: NextRequest) {
 
   const guest = await findGuestById(id);
   if (!guest) {
-    return NextResponse.json({ error: "Convidado nao encontrado." }, { status: 404 });
+    return NextResponse.json({ error: "Convidado não encontrado." }, { status: 404 });
   }
 
   if (guest.status !== "CONFIRMED") {
-    return NextResponse.json({ error: "Este convidado ainda nao confirmou presenca." }, { status: 400 });
+    return NextResponse.json({ error: "Este convidado ainda não confirmou presença." }, { status: 400 });
   }
 
   if (guest.entryValidated) {
-    return NextResponse.json({ error: "Entrada ja validada anteriormente." }, { status: 409 });
+    return NextResponse.json({ error: "Entrada já validada anteriormente." }, { status: 409 });
   }
 
   const updated = await validateGuestEntry(id);

@@ -41,7 +41,7 @@ export function GuestActions({ guest }: GuestActionsProps) {
     setLoading(false);
 
     if (!response.ok) {
-      setMessage(data.error || "Nao foi possivel editar o convidado.");
+      setMessage(data.error || "Não foi possível editar o convidado.");
       return;
     }
 
@@ -57,7 +57,7 @@ export function GuestActions({ guest }: GuestActionsProps) {
     setLoading(false);
 
     if (!response.ok) {
-      setMessage(data.error || "Nao foi possivel apagar o convidado.");
+      setMessage(data.error || "Não foi possível apagar o convidado.");
       return;
     }
 
@@ -96,12 +96,12 @@ export function GuestActions({ guest }: GuestActionsProps) {
               <input className="input" name="email" type="email" defaultValue={guest.email || ""} />
             </label>
             <label className="field">
-              <span>Maximo de acompanhantes</span>
+              <span>Máximo de acompanhantes</span>
               <input className="input" name="maxCompanions" type="number" min="0" defaultValue={guest.maxCompanions} />
             </label>
             {message ? <div className="notice error">{message}</div> : null}
             <button className="button primary" disabled={loading} type="submit">
-              {loading ? "Salvando..." : "Salvar alteracoes"}
+              {loading ? "Salvando..." : "Salvar alterações"}
             </button>
           </form>
         </div>
@@ -114,7 +114,7 @@ export function GuestActions({ guest }: GuestActionsProps) {
               <X size={18} />
             </button>
             <h2>Apagar convidado</h2>
-            <p className="muted">Tem certeza que deseja apagar {guest.name}? Essa acao nao pode ser desfeita.</p>
+            <p className="muted">Tem certeza que deseja apagar {guest.name}? Essa ação não pode ser desfeita.</p>
             {message ? <div className="notice error">{message}</div> : null}
             <div className="actions center">
               <button className="button ghost" type="button" onClick={() => setDeleting(false)}>

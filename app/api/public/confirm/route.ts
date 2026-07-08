@@ -4,7 +4,7 @@ import { findGuestByToken, updateGuestConfirmation } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   if (!confirmationIsEditable()) {
-    return NextResponse.json({ error: "As confirmacoes estao bloqueadas." }, { status: 403 });
+    return NextResponse.json({ error: "As confirmações estão bloqueadas." }, { status: 403 });
   }
 
   const body = await request.json();
@@ -13,12 +13,12 @@ export async function POST(request: NextRequest) {
   const companionsCount = Number(body.companionsCount || 0);
 
   if (!token || !status) {
-    return NextResponse.json({ error: "Resposta invalida." }, { status: 400 });
+    return NextResponse.json({ error: "Resposta inválida." }, { status: 400 });
   }
 
   const guest = await findGuestByToken(token);
   if (!guest) {
-    return NextResponse.json({ error: "Convite nao encontrado." }, { status: 404 });
+    return NextResponse.json({ error: "Convite não encontrado." }, { status: 404 });
   }
 
   if (!Number.isInteger(companionsCount) || companionsCount < 0 || companionsCount > guest.maxCompanions) {

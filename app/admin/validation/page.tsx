@@ -10,7 +10,7 @@ export default async function ValidationPage() {
     <AdminShell>
       <div className="page-title">
         <div>
-          <h1>Validacao de entrada</h1>
+          <h1>Validação de entrada</h1>
           <p className="muted">Busque por nome ou telefone e registre a entrada rapidamente.</p>
         </div>
       </div>
