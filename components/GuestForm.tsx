@@ -18,34 +18,51 @@ export function GuestForm({ onCreated }: GuestFormProps) {
   const [createdGuest, setCreatedGuest] = useState<CreatedGuest | null>(null);
   const [loading, setLoading] = useState(false);
 
+  async function readResponse(response: Response) {
+    const text = await response.text();
+    if (!text) return {};
+    try {
+      return JSON.parse(text);
+    } catch {
+      return {};
+    }
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setMessage("");
-    const form = new FormData(event.currentTarget);
-    const response = await fetch("/api/admin/guests", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: form.get("name"),
-        phone: form.get("phone"),
-        email: form.get("email"),
-        maxCompanions: Number(form.get("maxCompanions") || 0)
-      })
-    });
-    const data = await response.json();
-    setLoading(false);
-    if (!response.ok) {
-      setMessage(data.error || "Nao foi possivel cadastrar.");
-      return;
+    try {
+      const form = new FormData(event.currentTarget);
+      const response = await fetch("/api/admin/guests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.get("name"),
+          phone: form.get("phone"),
+          email: form.get("email"),
+          maxCompanions: Number(form.get("maxCompanions") || 0)
+        })
+      });
+      const data = await readResponse(response);
+
+      if (!response.ok || !data.guest) {
+        setMessage(data.error || "Nao foi possivel cadastrar. Tente novamente.");
+        return;
+      }
+
+      event.currentTarget.reset();
+      setMessage("");
+      setCreatedGuest({
+        name: data.guest.name,
+        link: data.guest.link
+      });
+      onCreated?.();
+    } catch {
+      setMessage("Nao foi possivel conectar ao servidor. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
-    event.currentTarget.reset();
-    setMessage("");
-    setCreatedGuest({
-      name: data.guest.name,
-      link: data.guest.link
-    });
-    onCreated?.();
   }
 
   return (
