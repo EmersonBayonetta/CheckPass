@@ -8,9 +8,14 @@ type GuestFormProps = {
   onCreated?: () => void;
 };
 
+type CreatedGuest = {
+  name: string;
+  link: string;
+};
+
 export function GuestForm({ onCreated }: GuestFormProps) {
   const [message, setMessage] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [createdGuest, setCreatedGuest] = useState<CreatedGuest | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -36,7 +41,10 @@ export function GuestForm({ onCreated }: GuestFormProps) {
     }
     event.currentTarget.reset();
     setMessage("");
-    setShowSuccess(true);
+    setCreatedGuest({
+      name: data.guest.name,
+      link: data.guest.link
+    });
     onCreated?.();
   }
 
@@ -64,23 +72,26 @@ export function GuestForm({ onCreated }: GuestFormProps) {
             <input className="input" min="0" name="maxCompanions" type="number" defaultValue="0" />
           </label>
         </div>
-        {message && !showSuccess ? <div className="notice error">{message}</div> : null}
+        {message && !createdGuest ? <div className="notice error">{message}</div> : null}
         <button className="button primary" disabled={loading} type="submit">
           <Save size={18} /> {loading ? "Salvando..." : "Cadastrar"}
         </button>
       </form>
 
-      {showSuccess ? (
+      {createdGuest ? (
         <div className="modal-backdrop" role="dialog" aria-modal="true">
           <div className="modal">
-            <button className="icon-button" type="button" aria-label="Fechar" onClick={() => setShowSuccess(false)}>
+            <button className="icon-button" type="button" aria-label="Fechar" onClick={() => setCreatedGuest(null)}>
               <X size={18} />
             </button>
             <CheckCircle className="success-icon" size={42} />
             <h2>Convidado cadastrado</h2>
-            <p className="muted">O link individual foi gerado e ja esta disponivel no painel.</p>
+            <p className="muted">
+              {createdGuest.name} foi cadastrado com sucesso. O link individual ja esta pronto para envio.
+            </p>
+            <div className="success-link">{createdGuest.link}</div>
             <div className="actions center">
-              <button className="button secondary" type="button" onClick={() => setShowSuccess(false)}>
+              <button className="button secondary" type="button" onClick={() => setCreatedGuest(null)}>
                 Cadastrar outro
               </button>
               <Link className="button primary" href="/admin">

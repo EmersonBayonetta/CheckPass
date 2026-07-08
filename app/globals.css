@@ -378,6 +378,18 @@ th {
   margin-bottom: 12px;
 }
 
+.success-link {
+  background: #f9fafb;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+  padding: 10px;
+  text-align: left;
+}
+
 .public-page {
   align-items: center;
   display: grid;
