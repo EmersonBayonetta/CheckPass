@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AdminShell } from "@/components/AdminShell";
 import { CopyLinkButton } from "@/components/CopyLinkButton";
+import { GuestActions } from "@/components/GuestActions";
 import { StatusBadge } from "@/components/StatusBadge";
 import { formatDateTime, publicUrlForToken } from "@/lib/format";
 import { requireAdmin } from "@/lib/auth";
@@ -85,6 +86,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
               <th>Confirmacao</th>
               <th>Entrada</th>
               <th>Link</th>
+              <th>Acoes</th>
             </tr>
           </thead>
           <tbody>
@@ -110,6 +112,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
                     </a>
                     <CopyLinkButton link={publicUrlForToken(guest.token)} />
                   </div>
+                </td>
+                <td>
+                  <GuestActions guest={guest} />
                 </td>
               </tr>
             ))}

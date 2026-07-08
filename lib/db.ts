@@ -186,6 +186,15 @@ export async function updateGuest(data: {
   return row ? toGuest(row) : null;
 }
 
+export async function deleteGuest(id: string) {
+  const [row] = await sql<{ id: string }[]>`
+    DELETE FROM guests
+    WHERE id = ${id}
+    RETURNING id
+  `;
+  return Boolean(row);
+}
+
 export async function validateGuestEntry(id: string) {
   const [row] = await sql<GuestRow[]>`
     UPDATE guests

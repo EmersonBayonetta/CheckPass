@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { CheckCircle, Save, X } from "lucide-react";
 import { useState } from "react";
 
@@ -78,9 +79,14 @@ export function GuestForm({ onCreated }: GuestFormProps) {
             <CheckCircle className="success-icon" size={42} />
             <h2>Convidado cadastrado</h2>
             <p className="muted">O link individual foi gerado e ja esta disponivel no painel.</p>
-            <button className="button primary" type="button" onClick={() => setShowSuccess(false)}>
-              OK
-            </button>
+            <div className="actions center">
+              <button className="button secondary" type="button" onClick={() => setShowSuccess(false)}>
+                Cadastrar outro
+              </button>
+              <Link className="button primary" href="/admin">
+                Voltar ao painel
+              </Link>
+            </div>
           </div>
         </div>
       ) : null}

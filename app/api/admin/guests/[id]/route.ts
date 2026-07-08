@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/auth";
 import { formatPhone, publicUrlForToken } from "@/lib/format";
-import { updateGuest } from "@/lib/db";
+import { deleteGuest, updateGuest } from "@/lib/db";
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await requireAdmin())) {
@@ -33,4 +33,19 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   }
 
   return NextResponse.json({ guest: { ...guest, link: publicUrlForToken(guest.token) } });
+}
+
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  if (!(await requireAdmin())) {
+    return NextResponse.json({ error: "Nao autorizado." }, { status: 401 });
+  }
+
+  const { id } = await params;
+  const deleted = await deleteGuest(id);
+
+  if (!deleted) {
+    return NextResponse.json({ error: "Convidado nao encontrado." }, { status: 404 });
+  }
+
+  return NextResponse.json({ ok: true });
 }

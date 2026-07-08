@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { AdminShell } from "@/components/AdminShell";
 import { GuestForm } from "@/components/GuestForm";
 import { requireAdmin } from "@/lib/auth";
@@ -13,6 +14,9 @@ export default async function GuestsPage() {
           <h1>Cadastro de convidados</h1>
           <p className="muted">Cadastre manualmente e gere links individuais automaticamente.</p>
         </div>
+        <Link className="button secondary" href="/admin">
+          Voltar
+        </Link>
       </div>
       <GuestForm />
     </AdminShell>

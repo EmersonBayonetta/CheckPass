@@ -169,6 +169,10 @@ h2 {
   gap: 10px;
 }
 
+.actions.center {
+  justify-content: center;
+}
+
 .button {
   align-items: center;
   border: 1px solid transparent;
