@@ -21,48 +21,80 @@ export function GuestActions({ guest }: GuestActionsProps) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  async function readResponse(response: Response) {
+    const text = await response.text();
+    if (!text) return {};
+    try {
+      return JSON.parse(text);
+    } catch {
+      return {};
+    }
+  }
+
+  function handleUnauthorized(response: Response) {
+    if (response.status !== 401) return false;
+    router.push("/admin/login");
+    return true;
+  }
+
   async function updateGuest(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setLoading(true);
     setMessage("");
 
-    const form = new FormData(event.currentTarget);
-    const response = await fetch(`/api/admin/guests/${guest.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: form.get("name"),
-        phone: form.get("phone"),
-        email: form.get("email"),
-        maxCompanions: Number(form.get("maxCompanions") || 0)
-      })
-    });
-    const data = await response.json();
-    setLoading(false);
+    try {
+      const form = new FormData(formElement);
+      const response = await fetch(`/api/admin/guests/${guest.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.get("name"),
+          phone: form.get("phone"),
+          email: form.get("email"),
+          maxCompanions: Number(form.get("maxCompanions") || 0)
+        })
+      });
+      const data = await readResponse(response);
 
-    if (!response.ok) {
-      setMessage(data.error || "Não foi possível editar o convidado.");
-      return;
+      if (handleUnauthorized(response)) return;
+
+      if (!response.ok) {
+        setMessage(data.error || "Não foi possível editar o convidado.");
+        return;
+      }
+
+      setEditing(false);
+      router.refresh();
+    } catch {
+      setMessage("Não foi possível conectar ao servidor.");
+    } finally {
+      setLoading(false);
     }
-
-    setEditing(false);
-    router.refresh();
   }
 
   async function deleteGuest() {
     setLoading(true);
     setMessage("");
-    const response = await fetch(`/api/admin/guests/${guest.id}`, { method: "DELETE" });
-    const data = await response.json();
-    setLoading(false);
 
-    if (!response.ok) {
-      setMessage(data.error || "Não foi possível apagar o convidado.");
-      return;
+    try {
+      const response = await fetch(`/api/admin/guests/${guest.id}`, { method: "DELETE" });
+      const data = await readResponse(response);
+
+      if (handleUnauthorized(response)) return;
+
+      if (!response.ok) {
+        setMessage(data.error || "Não foi possível apagar o convidado.");
+        return;
+      }
+
+      setDeleting(false);
+      router.refresh();
+    } catch {
+      setMessage("Não foi possível conectar ao servidor.");
+    } finally {
+      setLoading(false);
     }
-
-    setDeleting(false);
-    router.refresh();
   }
 
   return (

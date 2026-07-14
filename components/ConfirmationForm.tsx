@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X } from "lucide-react";
+import { Check, ExternalLink, MapPin, X } from "lucide-react";
 import { useState } from "react";
 
 type Props = {
@@ -15,6 +15,7 @@ type Props = {
 };
 
 export function ConfirmationForm({ guest, editable }: Props) {
+  const eventLocationUrl = "https://share.google/FzpaS0bnazDOUUZ0T";
   const [status, setStatus] = useState(guest.status);
   const [companionsCount, setCompanionsCount] = useState(guest.companionsCount);
   const [message, setMessage] = useState(editable ? "" : "Confirmações bloqueadas para este evento.");
@@ -52,6 +53,17 @@ export function ConfirmationForm({ guest, editable }: Props) {
       <p className="muted">Convite individual</p>
       <h1>Olá, {guest.name}</h1>
       <p>Você confirma presença?</p>
+      <div className="event-address">
+        <div className="event-address-icon">
+          <MapPin size={20} />
+        </div>
+        <div>
+          <strong>Endereço do evento</strong>
+          <a href={eventLocationUrl} target="_blank" rel="noreferrer">
+            Abrir localização no Google Maps <ExternalLink size={15} />
+          </a>
+        </div>
+      </div>
       <div className="form">
         {status !== "DECLINED" ? (
           <label className="field">

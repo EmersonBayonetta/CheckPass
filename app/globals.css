@@ -535,9 +535,21 @@ tbody tr:hover {
   width: 36px;
 }
 
-.success-icon {
+.success-icon,
+.success-burst {
   color: var(--success);
   margin-bottom: 12px;
+}
+
+.success-burst {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.success-burst svg:first-child {
+  color: var(--warning);
 }
 
 .success-link {
@@ -550,6 +562,42 @@ tbody tr:hover {
   overflow-wrap: anywhere;
   padding: 10px;
   text-align: left;
+}
+
+.event-address {
+  align-items: flex-start;
+  background: rgba(32, 198, 247, 0.08);
+  border: 1px solid rgba(32, 198, 247, 0.22);
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  padding: 12px;
+}
+
+.event-address-icon {
+  align-items: center;
+  background: rgba(32, 198, 247, 0.14);
+  border-radius: 8px;
+  color: var(--accent);
+  display: inline-flex;
+  flex: 0 0 40px;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.event-address strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.event-address a {
+  align-items: center;
+  color: #93e6ff;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
 }
 
 .public-page {

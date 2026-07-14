@@ -1,21 +1,39 @@
 "use client";
 
-import { Copy, Check } from "lucide-react";
+import { AlertCircle, Check, Copy } from "lucide-react";
 import { useState } from "react";
 
 export function CopyLinkButton({ link }: { link: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle");
 
   async function copyLink() {
-    await navigator.clipboard.writeText(link);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(link);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = link;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      setStatus("copied");
+      window.setTimeout(() => setStatus("idle"), 1800);
+    } catch {
+      setStatus("error");
+      window.setTimeout(() => setStatus("idle"), 2200);
+    }
   }
 
   return (
     <button className="button secondary" type="button" onClick={copyLink}>
-      {copied ? <Check size={18} /> : <Copy size={18} />}
-      {copied ? "Copiado" : "Copiar"}
+      {status === "copied" ? <Check size={18} /> : status === "error" ? <AlertCircle size={18} /> : <Copy size={18} />}
+      {status === "copied" ? "Copiado" : status === "error" ? "Erro ao copiar" : "Copiar"}
     </button>
   );
 }

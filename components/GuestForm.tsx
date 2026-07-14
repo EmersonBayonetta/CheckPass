@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { CheckCircle, Save, X } from "lucide-react";
+import { CheckCircle, Save, Sparkles, X } from "lucide-react";
 import { useState } from "react";
+import { CopyLinkButton } from "@/components/CopyLinkButton";
 
 type GuestFormProps = {
   onCreated?: () => void;
@@ -30,10 +31,12 @@ export function GuestForm({ onCreated }: GuestFormProps) {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setLoading(true);
     setMessage("");
+    setCreatedGuest(null);
     try {
-      const form = new FormData(event.currentTarget);
+      const form = new FormData(formElement);
       const response = await fetch("/api/admin/guests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,7 +54,7 @@ export function GuestForm({ onCreated }: GuestFormProps) {
         return;
       }
 
-      event.currentTarget.reset();
+      formElement.reset();
       setMessage("");
       setCreatedGuest({
         name: data.guest.name,
@@ -101,13 +104,17 @@ export function GuestForm({ onCreated }: GuestFormProps) {
             <button className="icon-button" type="button" aria-label="Fechar" onClick={() => setCreatedGuest(null)}>
               <X size={18} />
             </button>
-            <CheckCircle className="success-icon" size={42} />
+            <div className="success-burst">
+              <Sparkles size={18} />
+              <CheckCircle size={44} />
+            </div>
             <h2>Convidado cadastrado</h2>
             <p className="muted">
               {createdGuest.name} foi cadastrado com sucesso. O link individual já está pronto para envio.
             </p>
             <div className="success-link">{createdGuest.link}</div>
             <div className="actions center">
+              <CopyLinkButton link={createdGuest.link} />
               <button className="button secondary" type="button" onClick={() => setCreatedGuest(null)}>
                 Cadastrar outro
               </button>
